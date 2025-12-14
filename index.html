@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ラスベガスおみくじ</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+
+    .casino-bg {
+      display: flex;
+      height: 100%;
+      justify-content: space-around;
+      align-items: center;
+      background: #111;
+      color: white;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .main-section {
+      background: rgba(0,0,0,0.8);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 420px;
+    }
+
+    .history-section {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      width: 320px;
+    }
+
+    .title {
+      color: gold;
+      font-size: 2rem;
+    }
+
+    .result {
+      font-size: 2.5rem;
+      margin: 20px 0;
+    }
+
+    .message {
+      min-height: 100px;
+      margin-bottom: 15px;
+      color: #ffeb3b;
+      line-height: 1.5;
+    }
+
+    .draw-btn {
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(45deg, #ff005e, #ff9a00);
+      color: white;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="casino-bg">
+  <div class="main-section">
+    <h1 class="title">🎰 ラスベガスおみくじ 🎰</h1>
+
+    <div id="result" class="result">ここに結果が出ます</div>
+    <div id="message" class="message"></div>
+
+    <button id="drawBtn" class="draw-btn">おみくじを引く</button>
+    <button id="againBtn" class="draw-btn" style="display:none;">もう1回引く</button>
+  </div>
+
+  <div class="history-section">
+    <h2>引いた結果</h2>
+    <ul id="historyList"></ul>
+  </div>
+</div>
+
+<script>
+const omikujiList = [
+  { text: "大吉", msg: "慢心するな。努力を止めた瞬間に転落は始まる。", color: "springgreen" },
+  { text: "中吉", msg: "満足するな。ここからが勝負だ。", color: "skyblue" },
+  { text: "小吉", msg: "こんな結果で喜ぶな。本気を出せ。", color: "lightgreen" },
+  { text: "末吉", msg: "言い訳するな。行動しろ。", color: "gold" },
+  { text: "凶", msg: "運のせいにするな。原因は自分だ。", color: "red" },
+  { text: "大凶", msg: "逃げるな。ここから立て直せ。", color: "darkred" }
+];
+
+const resultBox = document.getElementById("result");
+const msgBox = document.getElementById("message");
+const historyList = document.getElementById("historyList");
+const drawBtn = document.getElementById("drawBtn");
+const againBtn = document.getElementById("againBtn");
+
+drawBtn.onclick = draw;
+againBtn.onclick = draw;
+
+function draw() {
+  const pick = omikujiList[Math.floor(Math.random() * omikujiList.length)];
+  resultBox.textContent = pick.text;
+  resultBox.style.color = pick.color;
+  msgBox.textContent = pick.msg;
+
+  const li = document.createElement("li");
+  li.textContent = pick.text + "： " + pick.msg;
+  li.style.color = pick.color;
+  historyList.appendChild(li);
+
+  drawBtn.style.display = "none";
+  againBtn.style.display = "inline-block";
+}
+</script>
+
+</body>
+</html>
